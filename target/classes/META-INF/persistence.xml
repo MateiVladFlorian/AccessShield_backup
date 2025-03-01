@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <persistence-unit name="org_AccessShield_backup_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>Entities.PaymentGateways</class>
+    <class>Entities.ReservationsHistory</class>
+    <class>Entities.RoomServices</class>
+    <class>Entities.RoomsAmenities</class>
+    <class>Entities.Building</class>
+    <class>Entities.AccessLogs</class>
+    <class>Entities.PaymentMethods</class>
+    <class>Entities.UserIdentifier</class>
+    <class>Entities.Booking</class>
+    <class>Entities.Reviews</class>
+    <class>Entities.AccessRoom</class>
+    <class>Entities.Rooms</class>
+    <class>Entities.UsersSessions</class>
+    <class>Entities.EventLogs</class>
+    <class>Entities.RoomAccessCards</class>
+    <class>Entities.MaintenanceLogs</class>
+    <class>Entities.Notifications</class>
+    <class>Entities.FlywaySchemaHistory</class>
+    <class>Entities.UserProfile</class>
+    <class>Entities.Promotions</class>
+    <class>Entities.BillingInfo</class>
+    <class>Entities.AuditLogs</class>
+    <class>Entities.Account</class>
+    <class>Entities.Reservations</class>
+    <class>Entities.TransactionAuditLogs</class>
+    <class>Entities.SecurityLogs</class>
+    <class>Entities.UsersRoles</class>
+    <class>Entities.Payments</class>
+    <class>Entities.Feedback</class>
+    <class>Entities.NotificationEvents</class>
+    <class>Entities.Transactions</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/accesscontrol"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="test1234"/>
+    </properties>
+  </persistence-unit>
+</persistence>
