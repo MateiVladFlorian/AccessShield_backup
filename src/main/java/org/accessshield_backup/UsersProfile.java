@@ -2,6 +2,7 @@ package org.accessshield_backup;
 
 import Entities.Account;
 import core.ManagerEntities;
+import jpa.AccountJpaController;
 
 /**
  *
@@ -12,11 +13,14 @@ public class UsersProfile extends javax.swing.JFrame {
     private ManagerEntities em;
     private Entities.UserProfile user_profile;
     private Account account;
+    private AccountJpaController ajc; 
+    
     /**
      * Creates new form UserProfile
      */
     public UsersProfile() {
         initComponents();
+        ajc = new AccountJpaController();
     }
 
     /**
@@ -85,6 +89,9 @@ public class UsersProfile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void save_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_dataActionPerformed
+        new Accounts().setVisible(true);
+        dispose();
+        /*
         users_Profile2.name.setEnabled(false);
         users_Profile2.number_phone.setEnabled(false);
         users_Profile2.description.setEnabled(false);
@@ -93,24 +100,28 @@ public class UsersProfile extends javax.swing.JFrame {
         
         user_profile = new Entities.UserProfile();
         em = new ManagerEntities();
-        account = em.getManagerEntities().find(Account.class, new SignUp().Index);
+        
+        account = em.getManagerEntities().find(Account.class, ajc.LastRowAccount());
         
         user_profile.setAccountId(account);
         user_profile.setCountry(users_Profile2.country_select.getSelectedItem().toString());
         user_profile.setName(users_Profile2.name.getText());
-        user_profile.setImageProfile(users_Profile2.resourcePathImage);
+        user_profile.setImageProfile(users_Profile2.getPathImage());
         user_profile.setNumberPhone(users_Profile2.number_phone.getText());
         user_profile.setDescription(users_Profile2.description.getText());
         
         if (account != null && !(users_Profile2.name.getText().equals("")) && !(users_Profile2.number_phone.getText().equals(""))) 
         {
             em.BeginDataTransaction(em.getManagerEntities());
-            em.InsertData(em.getManagerEntities(), account);
+            em.InsertData(em.getManagerEntities(), user_profile);
             em.UpdateDataTransaction(em.getManagerEntities());
             em.EndDataTransaction(em.getManagerEntities());
-            em.EndDataTransaction(em.getManagerEntities());
             em.closeEntity();
+            
+            new Accounts().setVisible(true);
+            dispose();
         }
+        */
     }//GEN-LAST:event_save_dataActionPerformed
 
     /**

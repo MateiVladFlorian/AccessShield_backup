@@ -52,13 +52,13 @@ public class AccountJpaController {
         return "";
     }
     
-    public void UpdateAccount(int id, String password, String status) {
+    public void UpdateAccount(Account a, int id, String password, String status) {
         try {
-            em.getManagerEntities().find(Account.class, id).setPassword(password);
-            em.getManagerEntities().find(Account.class, id).setStatus(status);
+            a.setPassword(password);
+            a.setStatus(status);
             
             em.BeginDataTransaction(f.createEntityManager());
-            em.getManagerEntities().merge(em.getManagerEntities().find(Account.class, id)); 
+            em.getManagerEntities().merge(a); 
             em.UpdateDataTransaction(em.getManagerEntities());
         }
         catch(Exception e) {
@@ -93,8 +93,6 @@ public class AccountJpaController {
             {
                 if (Username.equals(account.getUsername()) && Password.equals(account.getPassword())) 
                 {
-                    UpdateAccount(getIndexAccountSelected(Username), account.getPassword(), "activ");
-
                     AccountSession.setAccountId(account.getId());
                     AccountSession.setUsername(account.getUsername());
                     AccountSession.Authenticate(true);
@@ -111,7 +109,7 @@ public class AccountJpaController {
         return false;
     }
     
-    public boolean Reset(String Username, String Password, String finger_print) 
+    public boolean Reset(String Username, String Password) 
     {
         account = em.getManagerEntities().find(Account.class, getIndexAccountSelected(Username));
         
@@ -120,7 +118,7 @@ public class AccountJpaController {
             {
                 if(!(Password.equals(account.getPassword())) && getIndexAccountSelected(Username) > 0) 
                 {
-                    UpdateAccount(getIndexAccountSelected(Username), Password, "inactiv");
+                    UpdateAccount(account, getIndexAccountSelected(Username), Password, "inactiv");
                     AccountSession.Authenticate(false);
                     return true;       
                 }

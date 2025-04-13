@@ -13,8 +13,8 @@ C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\AccountsManager\Registe
 C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\Entities\AuditLogs.java
 C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\jpa\RoomAccessCardsJpaController.java
 C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\jpa\TransactionAuditLogsJpaController.java
+C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\org\accessshield_backup\UsersProfile.java
 C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\jpa\AccessLogsJpaController.java
-C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\AccountsManager\AccountSelected.java
 C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\jpa\AccessRoomJpaController.java
 C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\jpa\UsersRolesJpaController.java
 C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\Entities\RoomServices.java
@@ -94,7 +94,6 @@ C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\Entities\UserProfile.ja
 C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\jpa\AccountJpaController.java
 C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\ApplicationManager\UI_UserManagement\Setup_User_Role.java
 C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\ApplicationManager\Main_Dashboard\Management_transaction_logs.java
-C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\org\accessshield_backup\UserProfile.java
 C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\AccountsManager\ResetModel.java
 C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\jpa\exceptions\PreexistingEntityException.java
 C:\Users\vladu\Desktop\AccessShield_backup\src\main\java\jpa\AmenitiesJpaController.java

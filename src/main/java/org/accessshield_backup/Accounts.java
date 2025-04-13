@@ -3,15 +3,22 @@ package org.accessshield_backup;
 import AccountsManager.LoginModel;
 import AccountsManager.TemporaryToken;
 import Entities.Account;
+import Entities.UserProfile;
 import Entities.UsersRoles;
 import core.AccountSession;
+import core.AccountsUtil;
 import core.EmailProvider;
 import core.ManagerEntities;
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import jpa.AccountJpaController;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 
 /**
  *
@@ -20,14 +27,14 @@ import java.time.LocalDateTime;
 public class Accounts extends javax.swing.JFrame {
     private LoginModel Signin;
     
-    private TemporaryToken token;
+    private TemporaryToken token = new TemporaryToken();
+    private String t = token.GenerateToken(64);   
+    private boolean loggedInWithoutError = true;
     
     private Account account;
-    private UsersProfile user;
+    private UserProfile user_profile;
     private UsersRoles role;
-    
     private ManagerEntities em; 
-    
     
     /**
      * Creates new form Accounts
@@ -37,6 +44,7 @@ public class Accounts extends javax.swing.JFrame {
     
     public Accounts() 
     {
+        Signin = new LoginModel();
         em = new ManagerEntities(); 
         initComponents();
     }
@@ -135,7 +143,9 @@ public class Accounts extends javax.swing.JFrame {
     private void recoverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recoverMouseReleased
         Color pressed = Color.decode("#3333ff");
         recover.setForeground(pressed);
-        token.Duration(5); // Valabilitate token -> 5 min;
+        
+        token.UpdateValueVariable("GENERATED_TOKEN", t);
+        token.setToken("GENERATED_TOKEN", t);
         
         AccountJpaController ajc = new AccountJpaController();
         account = em.getManagerEntities().find(Account.class, ajc.getIndexAccountSelected(signIn1.username.getText()));
@@ -164,20 +174,41 @@ public class Accounts extends javax.swing.JFrame {
     }//GEN-LAST:event_registerActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        
         AccountJpaController ajc = new AccountJpaController();
+        account = ajc.getAccountFromUsername(signIn1.username.getText());
+        loggedInWithoutError = true;
         
-        account = ajc.getAccountFromUsername(signIn1.username.getText());     
-        user = em.getManagerEntities().find(UsersProfile.class, account.getId());
-        role = em.getManagerEntities().find(UsersRoles.class, account.getId());
+        if (account != null) 
+        {
+            user_profile  = em.getManagerEntities().find(UserProfile.class, account.getId());
+            role = em.getManagerEntities().find(UsersRoles.class, account.getId());
+            String encryptedPassword = AccountsUtil.GenerateSHA256(new String(signIn1.password.getPassword()));
+            
+            if (!encryptedPassword.equals(account.getPassword())) {
+                JOptionPane.showMessageDialog(this, "Do you lost the password?");
+                signIn1.password.setBorder(BorderFactory.createLineBorder(Color.RED));
+                loggedInWithoutError = false;
+                
+                signIn1.password.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusGained(FocusEvent arg0) {
+                        /* remove the red border of password field, when the user try editing again */
+                        signIn1.password.setBorder(BorderFactory.createLineBorder(Color.gray));
+                    }
+                });
+            }
+        }
+        else if (account == null)
+            JOptionPane.showMessageDialog(this, "This account does not exists!");
         
-        AccountSession.setAccountId(account.getId());  // Retine id-ul utilizatorului logat
-        AccountSession.setUsername(account.getUsername()); // Retine numele utilizatorului logat
-        
-        if (account != null && user != null && role != null) // Daca utilizatorul inregistrat si-a personalizat profilul si si-a setat rolul (admin or quest)
+        if(account != null && role != null && user_profile == null && loggedInWithoutError)
+            new UsersProfile().setVisible(true);
+        else if (account != null && role != null && user_profile != null) // Daca utilizatorul inregistrat si-a personalizat profilul si si-a setat rolul (admin or quest)
         {
             if(Signin.Login_Model(signIn1.username.getText(), new String(signIn1.password.getPassword()))) 
             { 
+                AccountSession.setAccountId(account.getId());  // Retine id-ul utilizatorului logat
+                AccountSession.setUsername(account.getUsername()); // Retine numele utilizatorului logat
                 AccountSession.Authenticate(true);
 
                 LocalDateTime now = LocalDateTime.now();

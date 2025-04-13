@@ -1,13 +1,11 @@
 package ApplicationManager.Authentication;
 
-import Entities.Account;
-import Entities.UserProfile;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import core.ManagerEntities;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Path;
@@ -15,12 +13,11 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import javax.swing.*;
-import org.accessshield_backup.Accounts;
-import org.accessshield_backup.SignUp;
 
 /**
  *
@@ -34,7 +31,6 @@ public class Users_Profile extends javax.swing.JPanel {
     
     private BufferedImage originalImage;
     private JFileChooser fileChooser;
-    public String resourcePathImage;
     
     public Users_Profile()
     {     
@@ -216,7 +212,7 @@ public class Users_Profile extends javax.swing.JPanel {
         setScaledImage(image);
     }//GEN-LAST:event_edit_imageActionPerformed
 
-    public void setScaledImage(JLabel label) 
+    public String setScaledImage(JLabel label) 
     {
         int result = fileChooser.showOpenDialog(this);
         
@@ -228,8 +224,6 @@ public class Users_Profile extends javax.swing.JPanel {
             Path absolutePathObj = Paths.get(selectedFile.getAbsolutePath());
             Path baseDirPath = Paths.get(base_dir);
             Path relativePath = baseDirPath.relativize(absolutePathObj);
-            
-            resourcePathImage = "/" + relativePath.toString().replace("\\", "/");
             
             try {
                 originalImage = ImageIO.read(selectedFile);
@@ -248,9 +242,14 @@ public class Users_Profile extends javax.swing.JPanel {
                 label.setText(null);
                 
             } catch (Exception ex) { JOptionPane.showMessageDialog(this, ""); }
+            
+            return "/" + relativePath.toString().replace("\\", "/");
         }
+        
+        return "";
     }  
     
+    public String getPathImage() { return setScaledImage(image); }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JComboBox<String> country_select;

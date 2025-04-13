@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package org.accessshield_backup;
+ package org.accessshield_backup;
 
 import ApplicationManager.ManagerBuildings.BuildingManager;
 import ApplicationManager.Builds;

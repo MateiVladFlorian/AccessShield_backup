@@ -15,6 +15,6 @@ public final class ResetModel {
     }
     
     public boolean Reset_Model(String Username, String Password, String finger_print) {
-        return account_controller.Reset(Username, AccountsUtil.GenerateSHA256(Password), AccountsUtil.GenerateSHA256(finger_print));
+        return account_controller.Reset(Username, AccountsUtil.GenerateSHA256(Password));
     }    
 }

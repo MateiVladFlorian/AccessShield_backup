@@ -1,5 +1,7 @@
 package org.accessshield_backup;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author vladu
@@ -8,9 +10,18 @@ public class Recover extends javax.swing.JFrame {
 
     /**
      * Creates new form Recover
-     */
-    public Recover() {
+     */    
+    
+    private AccountsManager.TemporaryToken token;
+    private jpa.AccountJpaController a;
+    private Entities.Account account;
+   
+    public Recover() 
+    {
         initComponents();
+        
+        token = new AccountsManager.TemporaryToken();
+        a = new jpa.AccountJpaController();
     }
 
     /**
@@ -79,7 +90,26 @@ public class Recover extends javax.swing.JFrame {
     }//GEN-LAST:event_backActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
+        String username = recover1.username.getText();
+        String p = new String(recover1.p.getPassword());
+        String cp = new String(recover1.cp.getPassword());
+        String tok = recover1.token.getText();
         
+        account = a.getAccountFromUsername(username);
+        
+        if (account != null && !p.equals("") && !cp.equals("") && !tok.equals(""))
+        {
+            if (p.equals(cp) && tok.equals(token.getToken("GENERATED_TOKEN")))
+            {
+                account.setPassword(p);
+                
+                if (a.Reset(username, p)) {
+                    JOptionPane.showMessageDialog(null,"Account successfully reseted!");
+                }
+            }
+        }
+        
+        token.Duration(10); // minutes
     }//GEN-LAST:event_resetActionPerformed
 
     /**

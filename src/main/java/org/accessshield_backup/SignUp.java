@@ -2,7 +2,9 @@ package org.accessshield_backup;
 
 import AccountsManager.RegisterModel;
 import Entities.Account;
+import Entities.UsersRoles;
 import core.AccountsUtil;
+import core.ManagerEntities;
 import javax.swing.JOptionPane;
 import jpa.AccountJpaController;
 
@@ -16,11 +18,16 @@ public class SignUp extends javax.swing.JFrame {
      */    
     private Account a;
     private AccountJpaController ajc;
-    public int Index = 0;
+    private ManagerEntities em; 
+    private Entities.UserProfile user_profile;
  
-    public SignUp() {
+    public SignUp() 
+    {
         initComponents();
+        register.setEnabled(true);
+        
         ajc = new AccountJpaController();
+        em = new ManagerEntities();
     }
 
     /**
@@ -107,7 +114,9 @@ public class SignUp extends javax.swing.JFrame {
         String location = register2.location.getText();
         String status = "inactiv";
         
-        if (!(user.equals("")) && !(email_address.equals("")) && !(password.equals("")) && !(cnp.equals("")) && !(location.equals("")))
+        UsersRoles role = em.getManagerEntities().find(UsersRoles.class, ajc.LastRowAccount());
+        
+        if (role == null && !(user.equals("")) && !(email_address.equals("")) && !(password.equals("")) && !(cnp.equals("")) && !(location.equals("")))
         {
             a = new Account();
    
@@ -125,12 +134,13 @@ public class SignUp extends javax.swing.JFrame {
             dispose();
         }
         
-        new Setup_Role().setVisible(true);
-        
-        index.setText(String.valueOf(ajc.LastRowAccount()));
-        Index = Integer.parseInt(index.getText());
+        if (user_profile == null && role != null) {
+            new UsersProfile().setVisible(true); dispose();
+        }
+        else if (role != null && user_profile != null) register.setEnabled(false);
     }//GEN-LAST:event_registerActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */

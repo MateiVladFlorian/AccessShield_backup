@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,24 +29,30 @@ public final class TemporaryToken
         rand = new SecureRandom();
     }
     
-    // Seteaza valoarea token-ului dupa o perioada de timp exprimata in minute;
     public void Duration(int minutes)
     {
         Timer t = new Timer();
-        
+        final CountDownLatch latch = new CountDownLatch(1);
+            
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                setToken("GENERATE_TOKEN", GenerateToken(64));
-                completed = true;
-                t.cancel();
+                completed = true; latch.countDown(); t.cancel();
             }
         };
         
         t.schedule(task, minutes * 60 * 1000);
         
-        if (completed) setToken("GENERATE_TOKEN", "");
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        UpdateValueVariable("GENERATED_TOKEN", "");
+        setToken("GENERATED_TOKEN", "");
     }
+    
     public void setToken(String variableKey, String value)
     {      
         try {
@@ -85,5 +92,22 @@ public final class TemporaryToken
             token.append(alfanumerics.charAt(rand.nextInt(alfanumerics.length())));
         
         return token.toString();
+    }
+    
+    public void UpdateValueVariable(String variableKey, String new_value)
+    {
+        try {
+            String c = Files.readString(Paths.get(path));
+            
+            if (c.contains(variableKey + "="))
+                c = c.replaceFirst(variableKey + "=.*", variableKey + "=" + new_value);
+            else
+                c += System.lineSeparator() + variableKey + "=" + new_value;
+            
+            Files.writeString(Paths.get(path), c);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(TemporaryToken.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

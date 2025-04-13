@@ -1,13 +1,6 @@
 package org.accessshield_backup;
 
-/*
-import Entities.Account;
-import core.AccountsUtil;
-import core.ManagerEntities;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence; */
-//import migrate_db.MigrateDatabase;  
+import migrate_db.MigrateDatabase;  
 /**
  *
  * @author vlad

@@ -14,34 +14,28 @@ public class Setup_Role extends javax.swing.JFrame
     private AccountJpaController ajc;
     private Account account;
     private ManagerEntities em;  
-    private SignUp signup;
     
     /**
      * Creates new form Setup_Role
      */
     public Setup_Role() 
     {
-        initComponents();
+        initComponents();       
         
         ajc = new AccountJpaController();    
         em = new ManagerEntities();      
-        signup = new SignUp();
+        account = em.getManagerEntities().find(Account.class, ajc.LastRowAccount());
         
         initWindow();
     }
     
     private void initWindow() 
     {   
-        if (signup.Index > 0) 
-        {
-            account = em.getManagerEntities().find(Account.class, signup.Index);
+        String userRole = ajc.GetUserRole();
+        int selectedIndex = userRole.isEmpty() ? -1 : (userRole.equals("admin") ? 0 : 1);
 
-            String userRole = ajc.GetUserRole();
-            int selectedIndex = userRole.isEmpty() ? -1 : (userRole.equals("admin") ? 0 : 1);
-
-            if(selectedIndex >= 0) setup_User_Role2.select.setSelectedIndex(selectedIndex);
-            setup_User_Role2.username.setText(account.getUsername());
-        }
+        if(selectedIndex >= 0) setup_User_Role2.select.setSelectedIndex(selectedIndex);
+        setup_User_Role2.username.setText(account.getUsername());           
     }
     
     /**
@@ -107,7 +101,7 @@ public class Setup_Role extends javax.swing.JFrame
 
     private void save_changesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_changesActionPerformed
         UsersRoles role = new UsersRoles();
-        role.setAccountId(ajc.getAccountFromUsername(new SignUp().register2.username.getText()));
+        role.setAccountId(ajc.getAccountFromUsername(account.getUsername()));
         
         if (setup_User_Role2.select.getSelectedItem().equals(".................................")) { //jcombobox
             setup_User_Role2.select.setSelectedIndex(setup_User_Role2.select.getSelectedIndex());
@@ -118,9 +112,8 @@ public class Setup_Role extends javax.swing.JFrame
         }
         if (setup_User_Role2.select.getSelectedItem().equals("admin") || setup_User_Role2.select.getSelectedItem().equals("quest")) 
         {
-            role.setRole(setup_User_Role2.select.getSelectedItem().toString());   
             String userRole = setup_User_Role2.select.getSelectedItem().toString();
-            
+            role.setRole(userRole);     
             ajc.InsertUserRole(role);
         }
         next_page.setEnabled(true);
