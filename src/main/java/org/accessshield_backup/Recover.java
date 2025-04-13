@@ -19,9 +19,12 @@ public class Recover extends javax.swing.JFrame {
     public Recover() 
     {
         initComponents();
-        
         token = new AccountsManager.TemporaryToken();
         a = new jpa.AccountJpaController();
+    }
+    
+    public void setFullName(String fullName) {
+        recover1.username.setText(fullName);
     }
 
     /**
@@ -92,6 +95,7 @@ public class Recover extends javax.swing.JFrame {
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
         String username = recover1.username.getText();
         String p = new String(recover1.p.getPassword());
+        
         String cp = new String(recover1.cp.getPassword());
         String tok = recover1.token.getText();
         
@@ -103,13 +107,13 @@ public class Recover extends javax.swing.JFrame {
             {
                 account.setPassword(p);
                 
-                if (a.Reset(username, p)) {
+                if (a.Reset(username, p))
                     JOptionPane.showMessageDialog(null,"Account successfully reseted!");
-                }
             }
         }
         
-        token.Duration(10); // minutes
+        new Accounts().setVisible(true);
+        dispose();
     }//GEN-LAST:event_resetActionPerformed
 
     /**

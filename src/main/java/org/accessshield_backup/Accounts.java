@@ -64,11 +64,11 @@ public class Accounts extends javax.swing.JFrame {
         signIn1 = new ApplicationManager.Authentication.SignIn();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Signin");
+        setTitle("Sign in");
 
         recover.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         recover.setForeground(new java.awt.Color(0, 51, 255));
-        recover.setText("         I have an account?");
+        recover.setText("         Lost password?");
         recover.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 recoverMouseEntered(evt);
@@ -136,26 +136,38 @@ public class Accounts extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void recoverMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recoverMousePressed
-        Color pressed = Color.decode("#e60000");
-        recover.setForeground(pressed);
+        if(!signIn1.username.getText().isEmpty()) {
+            Color pressed = Color.decode("#e60000");
+            recover.setForeground(pressed);
+        }
     }//GEN-LAST:event_recoverMousePressed
 
     private void recoverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recoverMouseReleased
-        Color pressed = Color.decode("#3333ff");
-        recover.setForeground(pressed);
-        
-        token.UpdateValueVariable("GENERATED_TOKEN", t);
-        token.setToken("GENERATED_TOKEN", t);
-        
-        AccountJpaController ajc = new AccountJpaController();
-        account = em.getManagerEntities().find(Account.class, ajc.getIndexAccountSelected(signIn1.username.getText()));
-        
-        if (account.getEmail().length() > 0) 
-        {
-            EmailProvider.Send(account.getEmail(), "sabu zhwq mypf dwvs", account.getEmail(), "Reset account.", "Your access token is: " + token.getToken("GENERATE_TOKEN"));
+        if(!signIn1.username.getText().isEmpty()) {
+            Color pressed = Color.decode("#3333ff");
+            recover.setForeground(pressed);
+
+            token.UpdateValueVariable("GENERATED_TOKEN", t);
+            token.setToken("GENERATED_TOKEN", t);
+
+            AccountJpaController ajc = new AccountJpaController();
+            account = em.getManagerEntities().find(Account.class, 
+                    ajc.getIndexAccountSelected(signIn1.username.getText()));
+
+            if (account.getEmail().length() > 0) 
+            {
+                EmailProvider.Send(account.getEmail(), "sabu zhwq mypf dwvs", 
+                        account.getEmail(), "Reset account", 
+                        "Your access token is: " + t);
+                
+                /* open recover window after sending of email message */
+                Recover recoverWin = new Recover();
+                recoverWin.setFullName(account.getUsername());
+                
+                recoverWin.setVisible(true);
+                dispose();
+            }
         }
-        new Recover().setVisible(true);
-        dispose();
     }//GEN-LAST:event_recoverMouseReleased
 
     private void recoverMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recoverMouseExited
@@ -164,8 +176,10 @@ public class Accounts extends javax.swing.JFrame {
     }//GEN-LAST:event_recoverMouseExited
 
     private void recoverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recoverMouseEntered
-        Color pressed = Color.decode("#6f6fff");
-        recover.setForeground(pressed);
+        if(!signIn1.username.getText().isEmpty()) {
+            Color pressed = Color.decode("#6f6fff");
+            recover.setForeground(pressed);
+        }
     }//GEN-LAST:event_recoverMouseEntered
 
     private void registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerActionPerformed
