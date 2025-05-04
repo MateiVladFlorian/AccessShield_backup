@@ -17,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -85,8 +84,6 @@ public class Account implements Serializable {
     private Collection<SecurityLogs> securityLogsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
     private Collection<Building> buildingCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "accountId")
-    private Feedback feedback;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
     private Collection<BillingInfo> billingInfoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
@@ -265,14 +262,6 @@ public class Account implements Serializable {
 
     public void setBuildingCollection(Collection<Building> buildingCollection) {
         this.buildingCollection = buildingCollection;
-    }
-
-    public Feedback getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback(Feedback feedback) {
-        this.feedback = feedback;
     }
 
     public Collection<BillingInfo> getBillingInfoCollection() {

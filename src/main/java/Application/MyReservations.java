@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package org.accessshield_backup;
+package Application;
 import ApplicationManager.ManagerBuildings.BookingViewModel;
 import core.AccountSession;
 import Entities.*;
@@ -13,8 +13,8 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import org.accessshield_backup.Building_Management;
 import jpa.*;
+import org.accessshield_backup.BookingPayment;
 
 /**
  *
@@ -26,11 +26,16 @@ public class MyReservations extends javax.swing.JFrame {
      */
     
     public int state = 0;
+    static Building_Management buildingWindow;
     
     public MyReservations() {
         initComponents();
         setLocationRelativeTo(null);
         fillReservationList();
+    }
+    
+    public static void setParent(Building_Management win) {
+        buildingWindow = win;
     }
     
     public void fillReservationList() {
@@ -161,7 +166,7 @@ public class MyReservations extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         accept.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        accept.setText("Accept");
+        accept.setText("Pay now...");
         accept.setEnabled(false);
         accept.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,7 +183,7 @@ public class MyReservations extends javax.swing.JFrame {
         });
 
         reject.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        reject.setText("Reject...");
+        reject.setText("Cancel");
         reject.setEnabled(false);
         reject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -262,12 +267,12 @@ public class MyReservations extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new Building_Management().setVisible(true);
+        buildingWindow.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        new Building_Management().setVisible(true);
+        buildingWindow.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -302,8 +307,6 @@ public class MyReservations extends javax.swing.JFrame {
                 accept.setEnabled(true);
                 reject.setEnabled(true);
             }
-            else if("confirmed".equals(model.getValueAt(selectedIndex, 5).toString()))
-                reject.setEnabled(true);
         }
     }//GEN-LAST:event_reservationsMouseClicked
 
@@ -312,12 +315,16 @@ public class MyReservations extends javax.swing.JFrame {
         int selectedIndex = reservations.getSelectedRow();
         
         if(selectedIndex >= 0) {
-            BookingJpaController bjc = new BookingJpaController();
+            String line = model.getValueAt(selectedIndex, 2).toString();
+            double totalPrice = Double.parseDouble(line.substring(0, line.length() - 2));
             int roomId = Integer.parseInt(model.getValueAt(selectedIndex, 1).toString()); 
-            int accountId = AccountSession.getAccountId();
-
-            bjc.updateOwnerReservationByRoom(accountId, roomId, "confirmed");
-            fillReservationList();
+            
+            BookingPayment pay = new BookingPayment();
+            pay.setParent(this);
+            
+            pay.setRoomId(roomId);
+            pay.setPrice(totalPrice);
+            pay.setVisible(true);
         }
     }//GEN-LAST:event_acceptActionPerformed
 
@@ -339,7 +346,8 @@ public class MyReservations extends javax.swing.JFrame {
     }//GEN-LAST:event_rejectActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        
+        buildingWindow.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_formWindowClosing
 
     private List<BookingViewModel> Convert(List<Object[]> bookings) throws ParseException {

@@ -1,5 +1,6 @@
-package org.accessshield_backup;
+package Application;
 
+import AccountsManager.AddProfile;
 import Entities.Account;
 import core.ManagerEntities;
 import jpa.AccountJpaController;
@@ -11,6 +12,8 @@ import jpa.AccountJpaController;
 public class UsersProfile extends javax.swing.JFrame {
 
     private ManagerEntities em;
+    
+    private AddProfile profile;
     private Entities.UserProfile user_profile;
     private Account account;
     private AccountJpaController ajc; 
@@ -18,8 +21,11 @@ public class UsersProfile extends javax.swing.JFrame {
     /**
      * Creates new form UserProfile
      */
-    public UsersProfile() {
+    public UsersProfile()
+    {
         initComponents();
+        
+        em = new ManagerEntities();
         ajc = new AccountJpaController();
     }
 
@@ -38,7 +44,6 @@ public class UsersProfile extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
-        setUndecorated(true);
 
         save_data.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         save_data.setText("Save");
@@ -91,7 +96,7 @@ public class UsersProfile extends javax.swing.JFrame {
     private void save_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_dataActionPerformed
         new Accounts().setVisible(true);
         dispose();
-        /*
+        
         users_Profile2.name.setEnabled(false);
         users_Profile2.number_phone.setEnabled(false);
         users_Profile2.description.setEnabled(false);
@@ -99,7 +104,7 @@ public class UsersProfile extends javax.swing.JFrame {
         users_Profile2.image.setEnabled(false);
         
         user_profile = new Entities.UserProfile();
-        em = new ManagerEntities();
+        profile = new AddProfile();
         
         account = em.getManagerEntities().find(Account.class, ajc.LastRowAccount());
         
@@ -112,16 +117,12 @@ public class UsersProfile extends javax.swing.JFrame {
         
         if (account != null && !(users_Profile2.name.getText().equals("")) && !(users_Profile2.number_phone.getText().equals(""))) 
         {
-            em.BeginDataTransaction(em.getManagerEntities());
-            em.InsertData(em.getManagerEntities(), user_profile);
-            em.UpdateDataTransaction(em.getManagerEntities());
-            em.EndDataTransaction(em.getManagerEntities());
-            em.closeEntity();
+            profile.AddUserProfile(user_profile);
             
             new Accounts().setVisible(true);
             dispose();
         }
-        */
+        
     }//GEN-LAST:event_save_dataActionPerformed
 
     /**

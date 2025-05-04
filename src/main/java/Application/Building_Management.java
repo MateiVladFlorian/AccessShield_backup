@@ -1,4 +1,4 @@
-package org.accessshield_backup;
+package Application;
 
 /**
  *
@@ -15,7 +15,9 @@ public class Building_Management extends javax.swing.JFrame {
     {
         initComponents();
         setLocationRelativeTo(null);
+        
         r = new MyReservations();
+        r.setParent(this);
     }
 
     /**

@@ -1,4 +1,4 @@
- package org.accessshield_backup;
+ package Application;
 
 import ApplicationManager.ManagerBuildings.BuildingManager;
 import ApplicationManager.Builds;
@@ -30,6 +30,7 @@ public class CreateBuild extends javax.swing.JFrame {
     public CreateBuild() 
     {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

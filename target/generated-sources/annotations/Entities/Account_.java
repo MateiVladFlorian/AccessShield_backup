@@ -6,7 +6,6 @@ import Entities.AuditLogs;
 import Entities.BillingInfo;
 import Entities.Booking;
 import Entities.Building;
-import Entities.Feedback;
 import Entities.Notifications;
 import Entities.Payments;
 import Entities.Promotions;
@@ -27,7 +26,7 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2025-04-13T15:06:47", comments="EclipseLink-2.7.12.v20230209-rNA")
+@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2025-05-04T22:03:39", comments="EclipseLink-2.7.12.v20230209-rNA")
 @StaticMetamodel(Account.class)
 public class Account_ { 
 
@@ -37,7 +36,6 @@ public class Account_ {
     public static volatile CollectionAttribute<Account, Transactions> transactionsCollection;
     public static volatile CollectionAttribute<Account, Reviews> reviewsCollection;
     public static volatile CollectionAttribute<Account, RoomAccessCards> roomAccessCardsCollection;
-    public static volatile SingularAttribute<Account, Feedback> feedback;
     public static volatile CollectionAttribute<Account, AccessLogs> accessLogsCollection;
     public static volatile CollectionAttribute<Account, Notifications> notificationsCollection;
     public static volatile SingularAttribute<Account, String> password;

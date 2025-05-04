@@ -42,7 +42,7 @@ public class DialogPane extends javax.swing.JPanel {
         spinner.setValue(1);
 
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jLabel1.setText("Set Price / Monthly :");
+        jLabel1.setText("Set Price / Daily:");
 
         jLabel2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel2.setText("$");

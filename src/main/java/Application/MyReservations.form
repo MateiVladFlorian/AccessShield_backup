@@ -201,7 +201,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="sansserif" size="16" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Accept"/>
+                <Property name="text" type="java.lang.String" value="Pay now..."/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -224,7 +224,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="sansserif" size="16" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Reject..."/>
+                <Property name="text" type="java.lang.String" value="Cancel"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>

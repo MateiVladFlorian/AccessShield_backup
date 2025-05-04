@@ -164,8 +164,10 @@ public class AccountJpaController {
     {
         String sql = "SELECT * FROM account ORDER BY id DESC LIMIT 1";
         Query nativeQuery = em.getManagerEntities().createNativeQuery(sql, Account.class);
-        Account a = (Account) nativeQuery.getSingleResult();
-        
-        return a.getId();
+
+        try {
+            Account a = (Account) nativeQuery.getSingleResult();
+            return a.getId();
+        } catch (NoResultException e) { return 0; }
     }
 }

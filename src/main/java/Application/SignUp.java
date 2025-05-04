@@ -1,4 +1,4 @@
-package org.accessshield_backup;
+package Application;
 
 import AccountsManager.RegisterModel;
 import Entities.Account;
@@ -16,7 +16,6 @@ public class SignUp extends javax.swing.JFrame {
     /**
      * Creates new form SignUp
      */    
-    private Account a;
     private AccountJpaController ajc;
     private ManagerEntities em; 
     private Entities.UserProfile user_profile;
@@ -118,7 +117,7 @@ public class SignUp extends javax.swing.JFrame {
         
         if (role == null && !(user.equals("")) && !(email_address.equals("")) && !(password.equals("")) && !(cnp.equals("")) && !(location.equals("")))
         {
-            a = new Account();
+            Account a = new Account();
    
             a.setUsername(user);
             a.setEmail(email_address);

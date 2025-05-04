@@ -1,4 +1,4 @@
-package org.accessshield_backup;
+package Application;
 
 import core.AccountSession;
 import Entities.*;
@@ -38,13 +38,13 @@ public class CreateReservation extends javax.swing.JFrame {
             RoomsJpaController rjc = new RoomsJpaController();
             
             Building building = bjc.getBuildingByName(buildingName);
-            pricePerRoom = building.getPrice();
+            pricePerRoom = building.getPrice();    
             List<Integer> rooms = rjc.GetAllAvailableRooms(building.getId());
             
             for(int i = 0; i < rooms.size(); i++)
                 this.rooms.addItem(rooms.get(i) + "");
             
-        }).start();
+        }).run();
     }
 
     /**

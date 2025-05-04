@@ -4,8 +4,8 @@
  */
 package ApplicationManager;
 import ApplicationManager.ManagerBuildings.BuildingManager;
-import org.accessshield_backup.CreateReservation;
-import org.accessshield_backup.MyReservations;
+import Application.CreateReservation;
+import Application.MyReservations;
 import java.util.*;
 import Entities.*;
 import core.AccountSession;
@@ -14,7 +14,8 @@ import java.text.SimpleDateFormat;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import jpa.*;
-import org.accessshield_backup.Building_Management;
+import Application.Building_Management;
+import Application.CreateBuild;
 
 /**
  *
@@ -235,6 +236,7 @@ public class Builds extends javax.swing.JPanel {
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         /* adauga panel-ul necesar pentru actualizarea in timp real pentru cladirile inregistrate */
         BuildingManager.setWindow(this);
+        new CreateBuild().setVisible(true);
     }//GEN-LAST:event_addActionPerformed
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed

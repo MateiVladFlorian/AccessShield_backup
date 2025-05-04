@@ -1,4 +1,4 @@
-package org.accessshield_backup;
+package Application;
 
 import AccountsManager.LoginModel;
 import AccountsManager.TemporaryToken;

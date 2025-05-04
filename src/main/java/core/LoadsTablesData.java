@@ -58,11 +58,7 @@ public class LoadsTablesData
         try { return em.getManagerEntities().createNativeQuery("SELECT * FROM users_roles", UsersRoles.class).getResultList(); } 
         catch (Exception e) { e.printStackTrace(); return new ArrayList<>(); }
     }
-    public List<Feedback> Load_Feedback_TableData()
-    {
-        try { return em.getManagerEntities().createNativeQuery("SELECT * FROM feedback", Feedback.class).getResultList(); } 
-        catch (Exception e) { e.printStackTrace(); return new ArrayList<>(); }
-    }
+    
     public List<Transactions> Load_Transactions_TableData()
     {
         try { return em.getManagerEntities().createNativeQuery("SELECT * FROM transactions", Transactions.class).getResultList(); } 
